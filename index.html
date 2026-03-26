@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    body {
+      background: #0a0a0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 24px 32px;
+      border-bottom: 1px solid #2a2a3a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    main {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: #13131a;
+      border: 1px solid #2a2a3a;
+      border-radius: 16px;
+      padding: 24px;
+    }
+    input {
+      background: #1c1c27;
+      border: 1px solid #2a2a3a;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 100%;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #00e5a0;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+    button:active{
+      transform: scale(0.95);
+      background: #00b37e;
+    }
+    h1{
+      font-size: 24px;
+      font-weight: 800;
+    }
+    h2{
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #6b6b8a;
+      margin-bottom: 16px;
+    }
+    .card.full{
+      grid-column: 1/-1;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Health Dashboard</h1>
+    <p id="today"></p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Log Weight</h2>
+      <input type="number" id="weightInput" placeholder="Enter weight (lbs)">
+      <input type="date" id="dateInput">
+      <button onclick="logWeight()">Log Entry</button>
+      <div id="entriesList">
+        <p>No entries yet</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>BMI Calculator</h2>
+      <input type="number" placeholder="Height (feet)">
+      <input type="number" placeholder="Height (inches)">
+      <button>Calculate BMI</button>
+      <p id="bmiResult">--</p>
+    </div>
+
+    <div class="card">
+      <h2>Goal Setting</h2>
+      <input type="number" placeholder="Goal weight (lbs)">
+      <button>Set Goal</button>
+      <div id="goalSection">
+        <p>Current: <span id="goalCurrent">--</span></p>
+        <p>Goal: <span id="goalTarget">--</span></p>
+        <p>Remaining: <span id="goalRemaining">--</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Stats</h2>
+      <p>Latest: <span id="statLatest">--</span></p>
+      <p>Lowest: <span id="statLowest">--</span></p>
+      <p>Highest: <span id="statHighest">--</span></p>
+      <p>Change: <span id="statChange">--</span></p>
+    </div>
+
+    <div class="card full">
+      <h2>Weight Over Time</h2>
+      <canvas id="weightChart"></canvas>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
