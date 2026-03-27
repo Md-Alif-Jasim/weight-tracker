@@ -4,77 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <style>
-    body {
-      background: #0a0a0f;
-      color: white;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      padding: 24px 32px;
-      border-bottom: 1px solid #2a2a3a;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    main {
-      padding: 28px 32px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .card {
-      background: #13131a;
-      border: 1px solid #2a2a3a;
-      border-radius: 16px;
-      padding: 24px;
-    }
-    input {
-      background: #1c1c27;
-      border: 1px solid #2a2a3a;
-      color: white;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 14px;
-      width: 100%;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-    }
-    button {
-      background: #00e5a0;
-      color: black;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.1s ease;
-    }
-    button:active{
-      transform: scale(0.95);
-      background: #00b37e;
-    }
-    h1{
-      font-size: 24px;
-      font-weight: 800;
-    }
-    h2{
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #6b6b8a;
-      margin-bottom: 16px;
-    }
-    .card.full{
-      grid-column: 1/-1;
-    }
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 
-  </style>
+  
 </head>
 <body>
   <header>
@@ -86,7 +21,7 @@
     <div class="card">
       <h2>Log Weight</h2>
       <input type="number" id="weightInput" placeholder="Enter weight (lbs)">
-      <input type="date" id="dateInput">
+      <input type="text" id="dateInput" placeholder="Select Date">
       <button onclick="logWeight()">Log Entry</button>
       <div id="entriesList">
         <p>No entries yet</p>
@@ -95,16 +30,16 @@
 
     <div class="card">
       <h2>BMI Calculator</h2>
-      <input type="number" placeholder="Height (feet)">
-      <input type="number" placeholder="Height (inches)">
-      <button>Calculate BMI</button>
+      <input type="number" id="heightFt" placeholder="Height (feet)">
+      <input type="number" id="heightIn" placeholder="Height (inches)">
+      <button onclick="calcBMI()">Calculate BMI</button>
       <p id="bmiResult">--</p>
     </div>
 
     <div class="card">
       <h2>Goal Setting</h2>
-      <input type="number" placeholder="Goal weight (lbs)">
-      <button>Set Goal</button>
+      <input type="number" id="goalInput" placeholder="Goal weight (lbs)">
+      <button onclick="setGoal()">Set Goal</button>
       <div id="goalSection">
         <p>Current: <span id="goalCurrent">--</span></p>
         <p>Goal: <span id="goalTarget">--</span></p>
@@ -125,6 +60,9 @@
       <canvas id="weightChart"></canvas>
     </div>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="app.js"></script>
+
 </body>
 </html>

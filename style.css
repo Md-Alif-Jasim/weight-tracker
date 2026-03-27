@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+    body {
+      background: #0a0a0f;
+      color: white;
+      font-family: sync, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    p, span{
+        font-family: 'DM Mono', monospace;
+        font-size: 14px;
+    }
+    header {
+      padding: 24px 32px;
+      border-bottom: 1px solid #2a2a3a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    main {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .card {
+      background: #13131a;
+      border: 1px solid #2a2a3a;
+      border-radius: 16px;
+      padding: 24px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover{
+        transform: translate(-4px);
+        border-color: #00e5a0;
+    }
+    
+    input {
+      background: #1c1c27;
+      border: 1px solid #2a2a3a;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 100%;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    input:focus{
+        border-color: #4a4a6a;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74,74,106,0.25);
+    }
+    
+    button {
+      background: #00e5a0;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+    button:active{
+      transform: scale(0.95);
+      background: #00b37e;
+    }
+    h1{
+      font-size: 24px;
+      font-weight: 800;
+    }
+    h2{
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #6b6b8a;
+      margin-bottom: 16px;
+    }
+    .card.full{
+      grid-column: 1/-1;
+    }
+
+    .entry{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #2a2a3a;
+    }
+
+    .del-btn{
+        background: transparent;
+        color: #ff6b6b;
+        border: 1px solid #ff6b6b;
+        padding: 2px 8px;
+        font-size: 12px;
+        border-radius: 4px;
+    }
+
+ 
