@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
       confirmPassword.placeholder = 'Confirm Password';
       formBox.insertBefore(firstName, emailInput);
       formBox.insertBefore(lastName, emailInput);
-      formBox.appendChild(confirmPassword);
+      const submitBtn = document.getElementById('submitBtn');
+formBox.insertBefore(confirmPassword, submitBtn);
     }
   }
 
