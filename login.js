@@ -85,8 +85,7 @@ formBox.insertBefore(confirmPassword, submitBtn);
       welcomeText.style.opacity = '1';
     }, 1500);
     setTimeout(function() {
-      window.location.href = 'index.html';
-    }, 3000);
+window.location.href = 'dashboard.html';    }, 3000);
   }
 
   window.switchForm = switchForm;

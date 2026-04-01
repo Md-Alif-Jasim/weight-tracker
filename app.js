@@ -21,8 +21,7 @@ onAuthStateChanged(auth, async function(user) {
 // Logout
 document.getElementById('logoutBtn').addEventListener('click', async function() {
   await signOut(auth);
-  window.location.href = 'login.html';
-});
+window.location.href = 'index.html';});
 
 // Set today's date
 document.getElementById('today').textContent = new Date().toLocaleDateString('en-US', {

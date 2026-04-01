@@ -1,76 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health Dashboard</title>
-  
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weight Tracker – Login</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f0f0f;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+      color: #4ade80;
+    }
+
+    p.subtitle {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      background: #2a2a2a;
+      color: #888;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      background: #4ade80;
+      color: #000;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #2a2a2a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    input:focus { border-color: #4ade80; }
+
+    button.main-btn {
+      width: 100%;
+      padding: 13px;
+      background: #4ade80;
+      color: #000;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button.main-btn:hover { opacity: 0.85; }
+
+    .error {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Health Dashboard</h1>
-    <p id="today"></p>
-      <button id="logoutBtn">Logout</button>
 
-  </header>
+<div class="card">
+  <h1>⚖️ WeightTracker</h1>
+  <p class="subtitle">Log your journey, hit your goal.</p>
 
-  <main>
-    <div class="card">
-      <h2>Log Weight</h2>
-      <input type="number" id="weightInput" placeholder="Enter weight (lbs)">
-      <input type="text" id="dateInput" placeholder="Select Date">
-      <button onclick="logWeight()">Log Entry</button>
-      <div id="entriesList">
-        <p>No entries yet</p>
-      </div>
-    </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('login')">Login</button>
+    <button class="tab" onclick="switchTab('signup')">Sign Up</button>
+  </div>
 
-    <div class="card">
-      <h2>BMI Calculator</h2>
-      <input type="number" id="heightFt" placeholder="Height (feet)">
-      <input type="number" id="heightIn" placeholder="Height (inches)">
-      <button onclick="calcBMI()">Calculate BMI</button>
-      <p id="bmiResult">--</p>
-    </div>
+  <input type="email" id="email" placeholder="Email address" />
+  <input type="password" id="password" placeholder="Password" />
 
-    <div class="card">
-      <h2>Goal Setting</h2>
-      <input type="number" id="goalInput" placeholder="Goal weight (lbs)">
-      <button onclick="setGoal()">Set Goal</button>
-      <div id="goalSection">
-        <p>Current: <span id="goalCurrent">--</span></p>
-        <p>Goal: <span id="goalTarget">--</span></p>
-        <p>Remaining: <span id="goalRemaining">--</span></p>
-      </div>
-    </div>
+  <div id="signup-fields" style="display:none;">
+    <input type="number" id="goalWeight" placeholder="Your goal weight (lbs)" />
+  </div>
 
-    <div class="card">
-      <h2>Stats</h2>
-      <p>Latest: <span id="statLatest">--</span></p>
-      <p>Lowest: <span id="statLowest">--</span></p>
-      <p>Highest: <span id="statHighest">--</span></p>
-      <p>Change: <span id="statChange">--</span></p>
-    </div>
+  <button class="main-btn" onclick="handleAuth()">Login</button>
+  <p class="error" id="error-msg"></p>
+</div>
 
-    <div class="card full">
-      <h2>Weight Over Time</h2>
-      <canvas id="weightChart"></canvas>
-    </div>
-  </main>
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc }
+    from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script type="module" src="app.js"></script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAnpOyeWgIIofik_ewgeGnSVtU8bu0qSKs",
+    authDomain: "weight-tracker-be276.firebaseapp.com",
+    projectId: "weight-tracker-be276",
+    storageBucket: "weight-tracker-be276.firebasestorage.app",
+    messagingSenderId: "691210632477",
+    appId: "1:691210632477:web:18d35bd6ab4b2367c2b5f4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // If already logged in, skip to dashboard
+  onAuthStateChanged(auth, (user) => {
+    if (user) window.location.href = "dashboard.html";
+  });
+
+  let currentTab = 'login';
+
+  window.switchTab = function(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelector('.main-btn').textContent = tab === 'login' ? 'Login' : 'Create Account';
+    document.getElementById('signup-fields').style.display = tab === 'signup' ? 'block' : 'none';
+    document.getElementById('error-msg').textContent = '';
+  }
+
+  window.handleAuth = async function() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const errorEl = document.getElementById('error-msg');
+    errorEl.textContent = '';
+
+    try {
+      if (currentTab === 'login') {
+        await signInWithEmailAndPassword(auth, email, password);
+      } else {
+        const goal = document.getElementById('goalWeight').value;
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        // Save goal weight to Firestore
+        await setDoc(doc(db, "users", cred.user.uid), {
+          email: email,
+          goalWeight: parseFloat(goal) || 0,
+          createdAt: new Date().toISOString()
+        });
+      }
+      window.location.href = "dashboard.html";
+    } catch (err) {
+      errorEl.textContent = err.message;
+    }
+  }
+</script>
 
 </body>
 </html>
-
-
-
 
 
 
