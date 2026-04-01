@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Dashboard</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+
+  
+</head>
+<body>
+  <header>
+    <h1>Health Dashboard</h1>
+    <p id="today"></p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Log Weight</h2>
+      <input type="number" id="weightInput" placeholder="Enter weight (lbs)">
+      <input type="text" id="dateInput" placeholder="Select Date">
+      <button onclick="logWeight()">Log Entry</button>
+      <div id="entriesList">
+        <p>No entries yet</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>BMI Calculator</h2>
+      <input type="number" id="heightFt" placeholder="Height (feet)">
+      <input type="number" id="heightIn" placeholder="Height (inches)">
+      <button onclick="calcBMI()">Calculate BMI</button>
+      <p id="bmiResult">--</p>
+    </div>
+
+    <div class="card">
+      <h2>Goal Setting</h2>
+      <input type="number" id="goalInput" placeholder="Goal weight (lbs)">
+      <button onclick="setGoal()">Set Goal</button>
+      <div id="goalSection">
+        <p>Current: <span id="goalCurrent">--</span></p>
+        <p>Goal: <span id="goalTarget">--</span></p>
+        <p>Remaining: <span id="goalRemaining">--</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Stats</h2>
+      <p>Latest: <span id="statLatest">--</span></p>
+      <p>Lowest: <span id="statLowest">--</span></p>
+      <p>Highest: <span id="statHighest">--</span></p>
+      <p>Change: <span id="statChange">--</span></p>
+    </div>
+
+    <div class="card full">
+      <h2>Weight Over Time</h2>
+      <canvas id="weightChart"></canvas>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
