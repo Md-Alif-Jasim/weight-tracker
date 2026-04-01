@@ -1,3 +1,20 @@
+import { auth } from './firebase-config.js';
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+// Redirect to login if not logged in
+onAuthStateChanged(auth, function(user) {
+  if (!user) {
+    window.location.href = 'login.html';
+  }
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', async function() {
+  await signOut(auth);
+  window.location.href = 'login.html';
+});
+
+
 //set todays date
 document.getElementById('today').textContent = new Date().toLocaleDateString('en-US',{
     weekday: 'long',
